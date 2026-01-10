@@ -43,7 +43,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Built with [Claude AI](https://www.anthropic.com/claude) by Anthropic
+- Built with [Vite](https://vitejs.dev/), [React](https://react.dev/), and [Claude AI](https://www.anthropic.com/claude) by Anthropic
 - Icons by [Lucide](https://lucide.dev/)
 - Styled with [Tailwind CSS](https://tailwindcss.com/)
-- Built with [Vite](https://vitejs.dev/) and [React](https://react.dev/)
+- Deployed with [Vercel](https://vercel.com)
