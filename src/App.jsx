@@ -25,7 +25,7 @@ const JournalApp = () => {
   useEffect(() => {
     loadEntries();
     generateDailyPrompt();
-  },);
+  },[]);
 
   const loadEntries = () => {
     try {
@@ -55,7 +55,7 @@ const JournalApp = () => {
         preview: e.content.substring(0, 200),
       }));
 
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch("/api/claude", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,13 +68,13 @@ const JournalApp = () => {
               role: "user",
               content: `You are an empathetic journaling companion. Based on these recent journal entries (or lack thereof), generate ONE thoughtful, open-ended prompt to encourage reflection today. Make it warm, specific, and non-judgmental.
 
-Recent entries: ${
+              Recent entries: ${
                 recentEntries.length > 0
                   ? JSON.stringify(recentEntries)
                   : "No recent entries - this might be their first time journaling"
               }
 
-Return only the prompt, nothing else.`,
+              Return only the prompt, nothing else.`,
             },
           ],
         }),
@@ -108,7 +108,6 @@ Return only the prompt, nothing else.`,
     const updatedEntries = [...entries, newEntry];
     saveEntries(updatedEntries);
     setCurrentEntry("");
-    generateDailyPrompt();
   };
 
   const analyzeEntries = async () => {
@@ -118,7 +117,7 @@ Return only the prompt, nothing else.`,
     try {
       const recentEntries = entries.slice(-30);
 
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch("/api/claude", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -131,17 +130,20 @@ Return only the prompt, nothing else.`,
               role: "user",
               content: `Analyze these journal entries and provide insights. Return ONLY valid JSON with no markdown formatting:
 
-{
-  "overallSentiment": "positive/neutral/mixed",
-  "dominantEmotions": ["emotion1", "emotion2", "emotion3"],
-  "recurringThemes": ["theme1", "theme2", "theme3"],
-  "patterns": "2-3 sentence observation about patterns",
-  "encouragement": "2-3 sentence encouraging reflection"
-}
+                        {
+                          "overallSentiment": "positive/neutral/mixed",
+                          "dominantEmotions": ["emotion1", "emotion2", "emotion3"],
+                          "recurringThemes": ["theme1", "theme2", "theme3"],
+                          "patterns": "2-3 sentence observation about patterns",
+                          "encouragement": "2-3 sentence encouraging reflection"
+                        }
 
-Entries: ${JSON.stringify(
-                recentEntries.map((e) => ({ date: e.date, content: e.content }))
-              )}`,
+                        Entries: ${JSON.stringify(
+                          recentEntries.map((e) => ({
+                            date: e.date,
+                            content: e.content,
+                          }))
+                        )}`,
             },
           ],
         }),
@@ -183,16 +185,13 @@ Entries: ${JSON.stringify(
   const sortedDates = Object.keys(entriesByDate).sort().reverse();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-blue-100">
       <div className="max-w-6xl mx-auto p-4 sm:p-8">
         <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-purple-900 mb-2 flex items-center justify-center gap-3">
-            <Heart className="w-8 h-8 text-pink-500" />
-            Reflective
+          <h1 className="text-4xl font-bold text-green-900 mb-2 flex items-center justify-center gap-3">
+            Nomi
           </h1>
-          <p className="text-purple-600">
-            Your private AI journaling companion
-          </p>
+          <p className="text-green-600">time to know me</p>
         </header>
 
         <nav className="flex gap-2 mb-8 bg-white rounded-xl p-2 shadow-lg">
@@ -200,8 +199,8 @@ Entries: ${JSON.stringify(
             onClick={() => setView("write")}
             className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
               view === "write"
-                ? "bg-purple-600 text-white shadow-md"
-                : "text-purple-600 hover:bg-purple-50"
+                ? "bg-green-600 text-white shadow-md"
+                : "text-green-600 hover:bg-green-50"
             }`}
           >
             <BookOpen className="w-5 h-5 inline mr-2" />
@@ -211,8 +210,8 @@ Entries: ${JSON.stringify(
             onClick={() => setView("history")}
             className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
               view === "history"
-                ? "bg-purple-600 text-white shadow-md"
-                : "text-purple-600 hover:bg-purple-50"
+                ? "bg-green-600 text-white shadow-md"
+                : "text-green-600 hover:bg-green-50"
             }`}
           >
             <Calendar className="w-5 h-5 inline mr-2" />
@@ -225,8 +224,8 @@ Entries: ${JSON.stringify(
             }}
             className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
               view === "insights"
-                ? "bg-purple-600 text-white shadow-md"
-                : "text-purple-600 hover:bg-purple-50"
+                ? "bg-green-600 text-white shadow-md"
+                : "text-green-600 hover:bg-green-50"
             }`}
           >
             <TrendingUp className="w-5 h-5 inline mr-2" />
@@ -236,26 +235,24 @@ Entries: ${JSON.stringify(
 
         {view === "write" && (
           <div className="space-y-6">
-            <div className="bg-white rounded-2xl p-6 shadow-xl border-2 border-purple-100">
+            <div className="bg-white rounded-2xl p-6 shadow-xl border-2 border-green-100">
               <div className="flex items-start gap-3 mb-4">
-                <Sparkles className="w-6 h-6 text-purple-500 mt-1 flex-shrink-0" />
+                <Sparkles className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
                 <div className="flex-1">
-                  <h3 className="font-semibold text-purple-900 mb-2">
+                  <h3 className="font-semibold text-green-900 mb-2">
                     Today's Prompt
                   </h3>
                   {isGeneratingPrompt ? (
-                    <p className="text-purple-600 italic animate-pulse">
+                    <p className="text-green-600 italic animate-pulse">
                       Generating a thoughtful prompt...
                     </p>
                   ) : (
-                    <p className="text-purple-700 leading-relaxed">
-                      {aiPrompt}
-                    </p>
+                    <p className="text-green-700 leading-relaxed">{aiPrompt}</p>
                   )}
                 </div>
                 <button
                   onClick={generateDailyPrompt}
-                  className="px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors"
+                  className="px-3 py-1 text-sm bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors"
                 >
                   New Prompt
                 </button>
@@ -268,9 +265,9 @@ Entries: ${JSON.stringify(
                   type="date"
                   value={selectedDate}
                   onChange={(e) => setSelectedDate(e.target.value)}
-                  className="px-4 py-2 border-2 border-purple-200 rounded-lg focus:outline-none focus:border-purple-500"
+                  className="px-4 py-2 border-2 border-green-200 rounded-lg focus:outline-none focus:border-green-500"
                 />
-                <div className="flex items-center gap-2 text-sm text-purple-600">
+                <div className="flex items-center gap-2 text-sm text-green-600">
                   <Brain className="w-4 h-4" />
                   <span>{currentEntry.length} characters</span>
                 </div>
@@ -280,14 +277,14 @@ Entries: ${JSON.stringify(
                 value={currentEntry}
                 onChange={(e) => setCurrentEntry(e.target.value)}
                 placeholder="Start writing... your thoughts are safe here."
-                className="w-full h-64 p-4 border-2 border-purple-200 rounded-xl focus:outline-none focus:border-purple-500 resize-none text-purple-900 leading-relaxed"
+                className="w-full h-64 p-4 border-2 border-green-200 rounded-xl focus:outline-none focus:border-green-500 resize-none text-green-900 leading-relaxed"
               />
 
               <div className="mt-4 flex justify-end">
                 <button
                   onClick={saveEntry}
                   disabled={!currentEntry.trim()}
-                  className="px-8 py-3 bg-purple-600 text-white rounded-xl font-medium hover:bg-purple-700 disabled:bg-purple-300 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl"
+                  className="px-8 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 disabled:bg-green-300 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl"
                 >
                   Save Entry
                 </button>
@@ -298,22 +295,22 @@ Entries: ${JSON.stringify(
 
         {view === "history" && (
           <div className="bg-white rounded-2xl p-6 shadow-xl">
-            <h2 className="text-2xl font-bold text-purple-900 mb-6">
+            <h2 className="text-2xl font-bold text-green-900 mb-6">
               Your Journey
             </h2>
 
             {entries.length === 0 ? (
               <div className="text-center py-12">
-                <Calendar className="w-16 h-16 text-purple-300 mx-auto mb-4" />
-                <p className="text-purple-600 text-lg">
+                <Calendar className="w-16 h-16 text-green-300 mx-auto mb-4" />
+                <p className="text-green-600 text-lg">
                   No entries yet. Start your journaling journey today!
                 </p>
               </div>
             ) : (
               <div className="space-y-6">
                 {sortedDates.map((date) => (
-                  <div key={date} className="border-l-4 border-purple-300 pl-4">
-                    <h3 className="font-semibold text-purple-900 mb-3">
+                  <div key={date} className="border-l-4 border-green-300 pl-4">
+                    <h3 className="font-semibold text-green-900 mb-3">
                       {new Date(date + "T00:00:00").toLocaleDateString(
                         "en-US",
                         {
@@ -327,12 +324,12 @@ Entries: ${JSON.stringify(
                     {entriesByDate[date].map((entry) => (
                       <div
                         key={entry.id}
-                        className="bg-purple-50 rounded-lg p-4 mb-3"
+                        className="bg-green-50 rounded-lg p-4 mb-3"
                       >
-                        <p className="text-purple-800 whitespace-pre-wrap leading-relaxed">
+                        <p className="text-green-800 whitespace-pre-wrap leading-relaxed">
                           {entry.content}
                         </p>
-                        <p className="text-xs text-purple-500 mt-2">
+                        <p className="text-xs text-green-500 mt-2">
                           {new Date(entry.timestamp).toLocaleTimeString()}
                         </p>
                       </div>
@@ -348,13 +345,13 @@ Entries: ${JSON.stringify(
           <div className="space-y-6">
             <div className="bg-white rounded-2xl p-6 shadow-xl">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-purple-900">
+                <h2 className="text-2xl font-bold text-green-900">
                   Your Insights
                 </h2>
                 <button
                   onClick={analyzeEntries}
                   disabled={isAnalyzing || entries.length === 0}
-                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-purple-300 disabled:cursor-not-allowed transition-all"
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-green-300 disabled:cursor-not-allowed transition-all"
                 >
                   {isAnalyzing ? "Analyzing..." : "Refresh Analysis"}
                 </button>
@@ -362,26 +359,26 @@ Entries: ${JSON.stringify(
 
               {entries.length === 0 ? (
                 <div className="text-center py-12">
-                  <BarChart3 className="w-16 h-16 text-purple-300 mx-auto mb-4" />
-                  <p className="text-purple-600 text-lg">
+                  <BarChart3 className="w-16 h-16 text-green-300 mx-auto mb-4" />
+                  <p className="text-green-600 text-lg">
                     Write a few entries to unlock personalized insights!
                   </p>
                 </div>
               ) : isAnalyzing ? (
                 <div className="text-center py-12">
-                  <Zap className="w-16 h-16 text-purple-500 mx-auto mb-4 animate-pulse" />
-                  <p className="text-purple-600 text-lg">
+                  <Zap className="w-16 h-16 text-green-500 mx-auto mb-4 animate-pulse" />
+                  <p className="text-green-600 text-lg">
                     Analyzing your journal entries...
                   </p>
                 </div>
               ) : insights ? (
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl p-6">
-                      <h3 className="font-semibold text-purple-900 mb-2">
+                    <div className="bg-gradient-to-br from-green-100 to-green-200 rounded-xl p-6">
+                      <h3 className="font-semibold text-green-900 mb-2">
                         Overall Sentiment
                       </h3>
-                      <p className="text-2xl font-bold text-purple-700 capitalize">
+                      <p className="text-2xl font-bold text-green-700 capitalize">
                         {insights.overallSentiment}
                       </p>
                     </div>

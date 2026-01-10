@@ -1,53 +1,37 @@
-# Reflective - AI Journaling Companion
+# Nomi - your Reflective AI Journaling Companion
 
-An intelligent, privacy-first journaling application powered by Claude AI.
-
-## Features
-
-- 🤖 **AI-Generated Prompts**: Context-aware writing prompts based on your history
-- 📊 **Smart Insights**: Sentiment analysis and pattern recognition
-- 🔒 **Privacy First**: All data stored locally on your device
-- 💜 **Beautiful UI**: Calming, distraction-free interface
-
-## Getting Started
-
-### Prerequisites
-- Node.js 18+ installed
-- Anthropic API key (get one at https://console.anthropic.com)
-
-### Installation
-
-1. Clone the repository
-```bash
-git clone https://github.com/yourusername/reflective-journal.git
-cd reflective-journal
-```
-
-2. Install dependencies
-```bash
-npm install
-```
-
-3. Run the development server
-```bash
-npm run dev
-```
-
-4. Open http://localhost:5173 in your browser
+Nomi (pronounced know-me) is a journaling companion that aims to make self-reflecting an effortless habit. Many people struggle with identifying meaningful patterns in past entries which reduces the benefits of journaling. Nomi helps provide prompts and insights into emotional patterns so users can get a better understanding of themselves. Whether you are a beginner or busy professional, Nomi is there to guide and encourage healthy journaling habits.
 
 ## Usage
 
-1. **Write**: Start journaling with AI-generated prompts
-2. **History**: Review past entries organized by date
-3. **Insights**: Analyze your entries to discover patterns and themes
+### Writing Your First Entry
 
-## Tech Stack
+1. **Read the AI Prompt**: The app generates a thoughtful prompt to get you started
+2. **Start Writing**: Type your thoughts in the text area
+3. **Save Your Entry**: Click "Save Entry" when you're done
+4. **Get a New Prompt**: Click "New Prompt" for fresh inspiration
 
-- React 18
-- Vite
-- Tailwind CSS
-- Lucide React (icons)
-- Claude AI (Sonnet 4)
+### Viewing Your History
+
+1. Click the **History** tab
+2. Browse entries organized by date
+3. Review your past reflections
+
+### Discovering Insights
+
+1. Write at least a few entries
+2. Click the **Insights** tab
+3. Click "Refresh Analysis" to analyze your entries
+4. Explore:
+   - Overall sentiment trends
+   - Dominant emotions
+   - Recurring themes
+   - Behavioral patterns
+   - Personalized encouragement
+
+## Live Demo
+
+Visit the live app: (https://reflective-journal.vercel.app/)
 
 ## Privacy
 
@@ -55,4 +39,11 @@ All journal entries are stored locally in your browser. The AI analysis happens 
 
 ## License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Built with [Claude AI](https://www.anthropic.com/claude) by Anthropic
+- Icons by [Lucide](https://lucide.dev/)
+- Styled with [Tailwind CSS](https://tailwindcss.com/)
+- Built with [Vite](https://vitejs.dev/) and [React](https://react.dev/)
