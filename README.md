@@ -4,9 +4,11 @@ Nomi (pronounced know-me) is a journaling companion that aims to make self-refle
 
 ## Presentation/Live Demo
 
-Youtube: (https://youtu.be/Un4e0w_ITwQ)
+Youtube: (https://youtu.be/Un4e0w_ITwQ)  
+
 Visit the live app: (https://reflective-journal.vercel.app/)
 
+## How it works
 
 ### Writing Your First Entry
 
