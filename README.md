@@ -2,7 +2,11 @@
 
 Nomi (pronounced know-me) is a journaling companion that aims to make self-reflecting an effortless habit. Many people struggle with identifying meaningful patterns in past entries which reduces the benefits of journaling. Nomi helps provide prompts and insights into emotional patterns so users can get a better understanding of themselves. Whether you are a beginner or busy professional, Nomi is there to guide and encourage healthy journaling habits.
 
-## Usage
+## Presentation/Live Demo
+
+Youtube: (https://youtu.be/Un4e0w_ITwQ)
+Visit the live app: (https://reflective-journal.vercel.app/)
+
 
 ### Writing Your First Entry
 
@@ -28,10 +32,6 @@ Nomi (pronounced know-me) is a journaling companion that aims to make self-refle
    - Recurring themes
    - Behavioral patterns
    - Personalized encouragement
-
-## Live Demo
-
-Visit the live app: (https://reflective-journal.vercel.app/)
 
 ## Privacy
 
